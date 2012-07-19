@@ -1,0 +1,11 @@
+## Interface: 40300
+## Title: MogIt_Highlighter
+## Version: @project-version@
+## Notes: Highlights items in your MogIt Wishlist.
+## Author: Ethan Centaurai
+## X-Category: Transmogrification
+## X-WoWIPortal: Ethan Centaurai
+## X-Date: @project-timestamp@
+## RequiredDeps: MogIt
+
+Core.lua
