@@ -1,4 +1,4 @@
-## Interface: 40300
+## Interface: 50001
 ## Title: MogIt_Highlighter
 ## Version: @project-version@
 ## Notes: Highlights items in your MogIt Wishlist.
