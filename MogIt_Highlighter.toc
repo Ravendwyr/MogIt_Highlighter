@@ -1,7 +1,7 @@
-## Interface: 50001
+## Interface: 50100
 ## Title: MogIt_Highlighter
 ## Version: @project-version@
-## Notes: Highlights items in your MogIt Wishlist.
+## Notes: Highlights quest rewards that are in your MogIt wishlist.
 ## Author: Ethan Centaurai
 ## X-Category: Transmogrification
 ## X-WoWIPortal: Ethan Centaurai
