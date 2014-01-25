@@ -1,10 +1,9 @@
 
-local _G = getfenv(0)
 local tonumber = _G.tonumber
 local Wishlist = _G.MogIt.wishlist
 
 
-local function highlight()
+local function HighlightQuestRewards()
 	for i=1, 10 do
 		ActionButton_HideOverlayGlow(_G["QuestInfoItem" .. i])
 	end
@@ -36,5 +35,4 @@ local function highlight()
 	end
 end
 
-
-hooksecurefunc("QuestInfo_Display", highlight)
+hooksecurefunc("QuestInfo_Display", HighlightQuestRewards)
