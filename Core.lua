@@ -5,7 +5,7 @@ local Wishlist = _G.MogIt.wishlist
 
 local function HighlightQuestRewards()
 	for i=1, 10 do
-		ActionButton_HideOverlayGlow(_G["QuestInfoItem" .. i])
+		ActionButton_HideOverlayGlow( _G["QuestInfoItem" .. i] )
 	end
 
 	local number_of_choices
@@ -29,7 +29,7 @@ local function HighlightQuestRewards()
 			local itemID = tonumber(link:match("item:(%d+)"))
 
 			if Wishlist:IsItemInWishlist(itemID) then
-				ActionButton_ShowOverlayGlow(_G["QuestInfoItem" .. i])
+				ActionButton_ShowOverlayGlow( _G["QuestInfoItem" .. i] )
 			end
 		end
 	end
@@ -37,6 +37,7 @@ end
 
 
 local function HighlightMerchantGoods()
+	-- code in this function largely stolen from oGlow
 	for i=1, MERCHANT_ITEMS_PER_PAGE do
 		ActionButton_HideOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
 	end
