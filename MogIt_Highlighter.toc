@@ -1,7 +1,7 @@
 ## Interface: 50400
 ## Title: MogIt_Highlighter
 ## Version: @project-version@
-## Notes: Highlights quest rewards that are in your MogIt wishlist.
+## Notes: Adds a highlight border to items in your MogIt Wishlist, making them easier to see.
 ## Author: Ethan Centaurai
 ## X-Category: Transmogrification
 ## X-WoWIPortal: Ethan Centaurai
