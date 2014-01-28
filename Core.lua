@@ -3,6 +3,17 @@ local tonumber = _G.tonumber
 local Wishlist = _G.MogIt.wishlist
 
 
+local function MakeItShine(itemLink, frame)
+	if itemLink then
+		local itemID = tonumber(itemLink:match("item:(%d+)"))
+
+		if Wishlist:IsItemInWishlist(itemID) then
+			ActionButton_ShowOverlayGlow(frame)
+		end
+	end
+end
+
+
 local function HighlightQuestRewards()
 	for i=1, 10 do
 		ActionButton_HideOverlayGlow( _G["QuestInfoItem" .. i] )
@@ -17,21 +28,15 @@ local function HighlightQuestRewards()
 	end
 
 	for i=1, number_of_choices do
-		local link
+		local itemLink
 
 		if QuestInfoFrame.questLog then
-			link = GetQuestLogItemLink("choice", i)
+			itemLink = GetQuestLogItemLink("choice", i)
 		else
-			link = GetQuestItemLink("choice", i)
+			itemLink = GetQuestItemLink("choice", i)
 		end
 
-		if link then
-			local itemID = tonumber(link:match("item:(%d+)"))
-
-			if Wishlist:IsItemInWishlist(itemID) then
-				ActionButton_ShowOverlayGlow( _G["QuestInfoItem" .. i] )
-			end
-		end
+		MakeItShine(itemLink, _G["QuestInfoItem" .. i])
 	end
 end
 
@@ -48,37 +53,14 @@ local function HighlightMerchantGoods()
 		if MerchantFrame.selectedTab == 1 then
 			for i=1, MERCHANT_ITEMS_PER_PAGE do
 				local index = ( ((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i )
-				local itemLink = GetMerchantItemLink(index)
 
-				if itemLink then
-					local itemID = tonumber(itemLink:match("item:(%d+)"))
-
-					if Wishlist:IsItemInWishlist(itemID) then
-						ActionButton_ShowOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
-					end
-				end
+				MakeItShine(GetMerchantItemLink(index), _G["MerchantItem" .. i .. "ItemButton"])
 			end
 
-			local buyBackLink = GetBuybackItemLink(GetNumBuybackItems())
-
-			if itemLink then
-				local itemID = tonumber(itemLink:match("item:(%d+)"))
-
-				if Wishlist:IsItemInWishlist(itemID) then
-					ActionButton_ShowOverlayGlow( _G["MerchantBuyBackItemItemButton"] )
-				end
-			end
+			MakeItShine(GetBuybackItemLink(GetNumBuybackItems()), _G["MerchantBuyBackItemItemButton"])
 		else
 			for i=1, BUYBACK_ITEMS_PER_PAGE do
-				local itemLink = GetBuybackItemLink(i)
-
-				if itemLink then
-					local itemID = tonumber(itemLink:match("item:(%d+)"))
-
-					if Wishlist:IsItemInWishlist(itemID) then
-						ActionButton_ShowOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
-					end
-				end
+				MakeItShine(GetBuybackItemLink(i), _G["MerchantItem" .. i .. "ItemButton"])
 			end
 		end
 	end
