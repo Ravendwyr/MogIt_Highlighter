@@ -15,28 +15,43 @@ end
 
 
 local function HighlightQuestRewards()
-	for i=1, 10 do
-		ActionButton_HideOverlayGlow( _G["QuestInfoItem" .. i] )
+	for i=1, #MapQuestInfoRewardsFrame.RewardButtons do
+		ActionButton_HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i] )
 	end
 
-	local number_of_choices
+	for i=1, #QuestInfoFrame.rewardsFrame.RewardButtons do
+		ActionButton_HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem" .. i] )
+	end
+
+	local itemLink
+	local numChoices, numRewards
 
 	if QuestInfoFrame.questLog then
-		number_of_choices = GetNumQuestLogChoices()
+		numRewards = GetNumQuestLogRewards()
+		numChoices = GetNumQuestLogChoices()
 	else
-		number_of_choices = GetNumQuestChoices()
+		numRewards = GetNumQuestRewards()
+		numChoices = GetNumQuestChoices()
 	end
 
-	for i=1, number_of_choices do
-		local itemLink
+	for i=1, numRewards do
+		itemLink = GetQuestLogItemLink("reward", i)
 
-		if QuestInfoFrame.questLog then
-			itemLink = GetQuestLogItemLink("choice", i)
+		if QuestInfoFrame.mapView then
+			MakeItShine(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
 		else
-			itemLink = GetQuestItemLink("choice", i)
+			MakeItShine(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
 		end
+	end	
 
-		MakeItShine(itemLink, _G["QuestInfoItem" .. i])
+	for i=1, numChoices do
+		itemLink = GetQuestLogItemLink("choice", i)
+
+		if QuestInfoFrame.mapView then
+			MakeItShine(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
+		else
+			MakeItShine(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
+		end
 	end
 end
 
