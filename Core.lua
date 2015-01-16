@@ -1,4 +1,8 @@
 
+--<< ================================================= >>--
+--     Upvalues                                          --
+--<< ================================================= >>--
+
 local _G = getfenv(0)
 
 local ShowOverlayGlow = LibStub("LibButtonGlow-1.0").ShowOverlayGlow
@@ -24,24 +28,32 @@ local match = _G.string.match
 local tonumber = _G.tonumber
 
 
+--<< ================================================= >>--
+--     Centralised Glow Function                         --
+--<< ================================================= >>--
+
 local function CheckAndHighlightItem(itemLink, frame)
 	if itemLink then
 		local itemID = tonumber( match(itemLink, "item:(%d+)") )
 
 		if Wishlist:IsItemInWishlist(itemID) then
-			ShowOverlayGlow(frame)
+			ShowOverlayGlow( _G[frame] )
 		end
 	end
 end
 
 
+--<< ================================================= >>--
+--     Quest Rewards                                     --
+--<< ================================================= >>--
+
 local function ScanQuestRewards()
 	for i=1, #MapQuestInfoRewardsFrame.RewardButtons do
-		HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i] )
+		HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem"..i] )
 	end
 
 	for i=1, #QuestInfoFrame.rewardsFrame.RewardButtons do
-		HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem" .. i] )
+		HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem"..i] )
 	end
 
 	local itemLink
@@ -59,9 +71,9 @@ local function ScanQuestRewards()
 		itemLink = GetQuestLogItemLink("reward", i)
 
 		if QuestInfoFrame.mapView then
-			CheckAndHighlightItem(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, "MapQuestInfoRewardsFrameQuestInfoItem"..i)
 		else
-			CheckAndHighlightItem(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, "QuestInfoRewardsFrameQuestInfoItem"..i)
 		end
 	end	
 
@@ -69,16 +81,23 @@ local function ScanQuestRewards()
 		itemLink = GetQuestLogItemLink("choice", i)
 
 		if QuestInfoFrame.mapView then
-			CheckAndHighlightItem(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, "MapQuestInfoRewardsFrameQuestInfoItem"..i)
 		else
-			CheckAndHighlightItem(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, "QuestInfoRewardsFrameQuestInfoItem"..i)
 		end
 	end
 end
 
+hooksecurefunc("QuestInfo_Display", ScanQuestRewards)
+
+
+--<< ================================================= >>--
+--     Merchants                                         --
+--<< ================================================= >>--
+
 local function ScanMerchantGoods()
 	for i=1, MERCHANT_ITEMS_PER_PAGE do
-		HideOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
+		HideOverlayGlow( _G["MerchantItem"..i.."ItemButton"] )
 	end
 
 	HideOverlayGlow( _G["MerchantBuyBackItemItemButton"] )
@@ -87,18 +106,16 @@ local function ScanMerchantGoods()
 		if MerchantFrame.selectedTab == 1 then
 			for i=1, MERCHANT_ITEMS_PER_PAGE do
 				local index = ((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i
-				CheckAndHighlightItem(GetMerchantItemLink(index), _G["MerchantItem" .. i .. "ItemButton"])
+				CheckAndHighlightItem(GetMerchantItemLink(index), "MerchantItem"..i.."ItemButton")
 			end
 
-			CheckAndHighlightItem(GetBuybackItemLink(GetNumBuybackItems()), _G["MerchantBuyBackItemItemButton"])
+			CheckAndHighlightItem(GetBuybackItemLink(GetNumBuybackItems()), "MerchantBuyBackItemItemButton")
 		else
 			for i=1, BUYBACK_ITEMS_PER_PAGE do
-				CheckAndHighlightItem(GetBuybackItemLink(i), _G["MerchantItem" .. i .. "ItemButton"])
+				CheckAndHighlightItem(GetBuybackItemLink(i), "MerchantItem"..i.."ItemButton")
 			end
 		end
 	end
 end
 
-
-hooksecurefunc("QuestInfo_Display", ScanQuestRewards)
-hooksecurefunc('MerchantFrame_Update', ScanMerchantGoods)
+hooksecurefunc("MerchantFrame_UpdateMerchantInfo", ScanMerchantGoods)
