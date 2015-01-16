@@ -1,14 +1,32 @@
 
-local tonumber = _G.tonumber
-local Wishlist = _G.MogIt.wishlist
+local _G = getfenv(0)
 
 local ShowOverlayGlow = LibStub("LibButtonGlow-1.0").ShowOverlayGlow
 local HideOverlayGlow = LibStub("LibButtonGlow-1.0").HideOverlayGlow
+local Wishlist = _G.MogIt.wishlist
+
+local BUYBACK_ITEMS_PER_PAGE = _G.BUYBACK_ITEMS_PER_PAGE
+local MERCHANT_ITEMS_PER_PAGE = _G.MERCHANT_ITEMS_PER_PAGE
+
+local GetBuybackItemLink = _G.GetBuybackItemLink
+local GetMerchantItemLink = _G.GetMerchantItemLink
+local GetNumBuybackItems = _G.GetNumBuybackItems
+local GetNumQuestChoices = _G.GetNumQuestChoices
+local GetNumQuestLogChoices = _G.GetNumQuestLogChoices
+local GetNumQuestLogRewards = _G.GetNumQuestLogRewards
+local GetNumQuestRewards = _G.GetNumQuestRewards
+local GetQuestLogItemLink = _G.GetQuestLogItemLink
+local MapQuestInfoRewardsFrame = _G.MapQuestInfoRewardsFrame
+local MerchantFrame = _G.MerchantFrame
+local QuestInfoFrame = _G.QuestInfoFrame
+
+local match = _G.string.match
+local tonumber = _G.tonumber
 
 
 local function MakeItShine(itemLink, frame)
 	if itemLink then
-		local itemID = tonumber(itemLink:match("item:(%d+)"))
+		local itemID = tonumber( match(itemLink, "item:(%d+)") )
 
 		if Wishlist:IsItemInWishlist(itemID) then
 			ShowOverlayGlow(frame)
