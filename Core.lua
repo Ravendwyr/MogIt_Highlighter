@@ -24,7 +24,7 @@ local match = _G.string.match
 local tonumber = _G.tonumber
 
 
-local function MakeItShine(itemLink, frame)
+local function CheckAndHighlightItem(itemLink, frame)
 	if itemLink then
 		local itemID = tonumber( match(itemLink, "item:(%d+)") )
 
@@ -35,7 +35,7 @@ local function MakeItShine(itemLink, frame)
 end
 
 
-local function HighlightQuestRewards()
+local function ScanQuestRewards()
 	for i=1, #MapQuestInfoRewardsFrame.RewardButtons do
 		HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i] )
 	end
@@ -59,9 +59,9 @@ local function HighlightQuestRewards()
 		itemLink = GetQuestLogItemLink("reward", i)
 
 		if QuestInfoFrame.mapView then
-			MakeItShine(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
 		else
-			MakeItShine(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
 		end
 	end	
 
@@ -69,15 +69,14 @@ local function HighlightQuestRewards()
 		itemLink = GetQuestLogItemLink("choice", i)
 
 		if QuestInfoFrame.mapView then
-			MakeItShine(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i])
 		else
-			MakeItShine(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
+			CheckAndHighlightItem(itemLink, _G["QuestInfoRewardsFrameQuestInfoItem" .. i])
 		end
 	end
 end
 
-local function HighlightMerchantGoods()
-	-- code in this function largely stolen from oGlow
+local function ScanMerchantGoods()
 	for i=1, MERCHANT_ITEMS_PER_PAGE do
 		HideOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
 	end
@@ -87,20 +86,19 @@ local function HighlightMerchantGoods()
 	if MerchantFrame:IsShown() then
 		if MerchantFrame.selectedTab == 1 then
 			for i=1, MERCHANT_ITEMS_PER_PAGE do
-				local index = ( ((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i )
-
-				MakeItShine(GetMerchantItemLink(index), _G["MerchantItem" .. i .. "ItemButton"])
+				local index = ((MerchantFrame.page - 1) * MERCHANT_ITEMS_PER_PAGE) + i
+				CheckAndHighlightItem(GetMerchantItemLink(index), _G["MerchantItem" .. i .. "ItemButton"])
 			end
 
-			MakeItShine(GetBuybackItemLink(GetNumBuybackItems()), _G["MerchantBuyBackItemItemButton"])
+			CheckAndHighlightItem(GetBuybackItemLink(GetNumBuybackItems()), _G["MerchantBuyBackItemItemButton"])
 		else
 			for i=1, BUYBACK_ITEMS_PER_PAGE do
-				MakeItShine(GetBuybackItemLink(i), _G["MerchantItem" .. i .. "ItemButton"])
+				CheckAndHighlightItem(GetBuybackItemLink(i), _G["MerchantItem" .. i .. "ItemButton"])
 			end
 		end
 	end
 end
 
 
-hooksecurefunc("QuestInfo_Display", HighlightQuestRewards)
-hooksecurefunc('MerchantFrame_Update', HighlightMerchantGoods)
+hooksecurefunc("QuestInfo_Display", ScanQuestRewards)
+hooksecurefunc('MerchantFrame_Update', ScanMerchantGoods)
