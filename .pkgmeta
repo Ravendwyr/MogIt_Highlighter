@@ -1,0 +1,5 @@
+
+externals:
+	Libs/LibButtonGlow-1.0: git://git.wowace.com/wow/libbuttonglow-1-0/mainline.git
+
+license-output: LICENSE.txt

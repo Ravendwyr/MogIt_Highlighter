@@ -2,13 +2,16 @@
 local tonumber = _G.tonumber
 local Wishlist = _G.MogIt.wishlist
 
+local ShowOverlayGlow = LibStub("LibButtonGlow-1.0").ShowOverlayGlow
+local HideOverlayGlow = LibStub("LibButtonGlow-1.0").HideOverlayGlow
+
 
 local function MakeItShine(itemLink, frame)
 	if itemLink then
 		local itemID = tonumber(itemLink:match("item:(%d+)"))
 
 		if Wishlist:IsItemInWishlist(itemID) then
-			ActionButton_ShowOverlayGlow(frame)
+			ShowOverlayGlow(frame)
 		end
 	end
 end
@@ -16,11 +19,11 @@ end
 
 local function HighlightQuestRewards()
 	for i=1, #MapQuestInfoRewardsFrame.RewardButtons do
-		ActionButton_HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i] )
+		HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem" .. i] )
 	end
 
 	for i=1, #QuestInfoFrame.rewardsFrame.RewardButtons do
-		ActionButton_HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem" .. i] )
+		HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem" .. i] )
 	end
 
 	local itemLink
@@ -55,14 +58,13 @@ local function HighlightQuestRewards()
 	end
 end
 
-
 local function HighlightMerchantGoods()
 	-- code in this function largely stolen from oGlow
 	for i=1, MERCHANT_ITEMS_PER_PAGE do
-		ActionButton_HideOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
+		HideOverlayGlow( _G["MerchantItem" .. i .. "ItemButton"] )
 	end
 
-	ActionButton_HideOverlayGlow( _G["MerchantBuyBackItemItemButton"] )
+	HideOverlayGlow( _G["MerchantBuyBackItemItemButton"] )
 
 	if MerchantFrame:IsShown() then
 		if MerchantFrame.selectedTab == 1 then
