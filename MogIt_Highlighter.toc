@@ -8,4 +8,5 @@
 ## X-Date: @project-timestamp@
 ## RequiredDeps: MogIt
 
+Libs\LibButtonGlow-1.0\LibButtonGlow-1.0.lua
 Core.lua
