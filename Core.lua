@@ -49,11 +49,15 @@ end
 
 local function ScanQuestRewards()
 	for i=1, #MapQuestInfoRewardsFrame.RewardButtons do
-		HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem"..i] )
+		if _G["MapQuestInfoRewardsFrameQuestInfoItem"..i] then
+			HideOverlayGlow( _G["MapQuestInfoRewardsFrameQuestInfoItem"..i] )
+		end
 	end
 
 	for i=1, #QuestInfoFrame.rewardsFrame.RewardButtons do
-		HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem"..i] )
+		if _G["QuestInfoRewardsFrameQuestInfoItem"..i] then
+			HideOverlayGlow( _G["QuestInfoRewardsFrameQuestInfoItem"..i] )
+		end
 	end
 
 	local itemLink
@@ -75,7 +79,7 @@ local function ScanQuestRewards()
 		else
 			CheckAndHighlightItem(itemLink, "QuestInfoRewardsFrameQuestInfoItem"..i)
 		end
-	end	
+	end
 
 	for i=1, numChoices do
 		itemLink = GetQuestLogItemLink("choice", i)
