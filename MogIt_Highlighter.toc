@@ -1,4 +1,4 @@
-## Interface: 60000
+## Interface: 60200
 ## Title: MogIt_Highlighter
 ## Version: @project-version@
 ## Notes: Adds a highlight border to items in your MogIt Wishlist, making them easier to see.
